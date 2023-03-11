@@ -95,6 +95,7 @@ void buttonReleased() {
 
 void debounceFSM_init() {
 	buttonDebounce = BUTTON_UP;
+	delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
 }
 
 
@@ -103,7 +104,6 @@ void debounceFSM_update() {
 	case BUTTON_UP:
 		if(BSP_PB_GetState(BUTTON_USER)) {
 			buttonDebounce = BUTTON_FALLING;
-			delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
 		}
 		break;
 	case BUTTON_FALLING:
@@ -120,7 +120,6 @@ void debounceFSM_update() {
 	case BUTTON_DOWN:
 		if(!BSP_PB_GetState(BUTTON_USER)) {
 			buttonDebounce = BUTTON_RAISING;
-			delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
 		}
 		break;
 	case BUTTON_RAISING:

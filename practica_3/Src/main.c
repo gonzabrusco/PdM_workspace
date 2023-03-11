@@ -91,7 +91,6 @@ int main(void) {
 				ledIsOn = false;
 				i = (i + 1) % (sizeof(ledSequence) / sizeof(Led_TypeDef));
 			}
-			delayInit(&delayLed, LED_ON_OFF_TIME);
 		}
 	}
 }

@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "API_debounce.h"
 #include "API_delay.h"
 
 /** @addtogroup STM32F4xx_HAL_Examples
@@ -34,9 +35,6 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-debounceState_t buttonDebounce;
-delay_t buttonDelay;
-
 /* UART handler declaration */
 UART_HandleTypeDef UartHandle;
 
@@ -53,6 +51,9 @@ static void Error_Handler(void);
  * @retval None
  */
 int main(void) {
+	delay_t ledDelay;
+	tick_t ledDuration;
+
 	/* STM32F4xx HAL library initialization:
 	 - Configure the Flash prefetch
 	 - Systick timer is configured by default as source of time base, but user
@@ -68,76 +69,33 @@ int main(void) {
 	/* Configure the system clock to 180 MHz */
 	SystemClock_Config();
 
-	/* Initialize BSP Led for LED1 */
-	BSP_LED_Init(LED1);
-	/* Initialize BSP Led for LE3 */
-	BSP_LED_Init(LED3);
-	/* Initialize BSP PB for BUTTON_USER */
-	BSP_PB_Init(BUTTON_USER, BUTTON_MODE_GPIO);
+	/* Initialize BSP Led for LED2 */
+	BSP_LED_Init(LED2);
+
 	// Inicializo MEF
 	debounceFSM_init();
-
+	ledDuration = LED_ON_OFF_PERIOD_A;
+	delayInit(&ledDelay, ledDuration);
 
 	/* Infinite loop */
 	while (1) {
-		debounceFSM_update();
+		debounceFSM_update(); // Actualizo MEF
+		if(readKey()) {
+			switch(ledDuration) {
+			case LED_ON_OFF_PERIOD_A:
+				ledDuration = LED_ON_OFF_PERIOD_B;
+				break;
+			case LED_ON_OFF_PERIOD_B:
+				ledDuration = LED_ON_OFF_PERIOD_A;
+				break;
+			}
+		}
+		if(delayRead(&ledDelay)) {
+			delayWrite(&ledDelay, ledDuration);
+			BSP_LED_Toggle(LED2);
+		}
 	}
 }
-
-
-void buttonPressed() {
-	BSP_LED_Toggle(LED1);
-}
-
-void buttonReleased() {
-	BSP_LED_Toggle(LED3);
-}
-
-void debounceFSM_init() {
-	buttonDebounce = BUTTON_UP;
-}
-
-
-void debounceFSM_update() {
-	switch (buttonDebounce) {
-	case BUTTON_UP:
-		if(BSP_PB_GetState(BUTTON_USER)) {
-			buttonDebounce = BUTTON_FALLING;
-			delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
-		}
-		break;
-	case BUTTON_FALLING:
-		if(delayRead(&buttonDelay)) {
-			if(BSP_PB_GetState(BUTTON_USER)) {
-				buttonDebounce = BUTTON_DOWN;
-				buttonPressed();
-			}
-			else {
-				buttonDebounce = BUTTON_UP;
-			}
-		}
-		break;
-	case BUTTON_DOWN:
-		if(!BSP_PB_GetState(BUTTON_USER)) {
-			buttonDebounce = BUTTON_RAISING;
-			delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
-		}
-		break;
-	case BUTTON_RAISING:
-		if(delayRead(&buttonDelay)) {
-			if(!BSP_PB_GetState(BUTTON_USER)) {
-				buttonDebounce = BUTTON_UP;
-				buttonReleased();
-			}
-			else {
-				buttonDebounce = BUTTON_DOWN;
-			}
-
-		}
-		break;
-	}
-}
-
 
 /**
  * @brief  System Clock Configuration

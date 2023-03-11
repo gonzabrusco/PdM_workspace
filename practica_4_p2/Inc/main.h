@@ -27,12 +27,6 @@
 #include "stm32f4xx_nucleo_144.h" 	/* <- BSP include */
 
 /* Exported types ------------------------------------------------------------*/
-typedef enum{
-	BUTTON_UP,
-	BUTTON_FALLING,
-	BUTTON_DOWN,
-	BUTTON_RAISING,
-} debounceState_t;
 /* Exported constants --------------------------------------------------------*/
 /* User can use this section to tailor USARTx/UARTx instance used and associated
    resources */
@@ -53,15 +47,11 @@ typedef enum{
 #define USARTx_RX_GPIO_PORT              GPIOD
 #define USARTx_RX_AF                     GPIO_AF7_USART3
 
-#define BUTTON_DEBOUNCE_TIME	 		 40
+#define LED_ON_OFF_PERIOD_A				 100
+#define LED_ON_OFF_PERIOD_B				 500
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-
-void debounceFSM_init();
-void debounceFSM_update();
-void buttonPressed();
-void buttonReleased();
 
 #endif /* __MAIN_H */
 

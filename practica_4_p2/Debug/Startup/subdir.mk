@@ -16,7 +16,7 @@ S_DEPS += \
 
 # Each subdirectory must supply rules for building sources it contributes
 Startup/%.o: ../Startup/%.s Startup/subdir.mk
-	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p1/Drivers/API/inc" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -DDEBUG -c -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/API/inc" -x assembler-with-cpp -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "$@" "$<"
 
 clean: clean-Startup
 

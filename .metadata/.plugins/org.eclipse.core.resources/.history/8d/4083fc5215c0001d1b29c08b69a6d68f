@@ -1,0 +1,65 @@
+/*
+ * API_debounce.c
+ *
+ *  Created on: Mar 11, 2023
+ *      Author: gonza
+ */
+
+#include "API_debounce.h"
+#include "API_delay.h"
+
+static debounceState_t buttonDebounce;
+static delay_t buttonDelay;
+
+#define BUTTON_DEBOUNCE_TIME	40
+
+typedef enum{
+	BUTTON_UP,
+	BUTTON_FALLING,
+	BUTTON_DOWN,
+	BUTTON_RAISING,
+} debounceState_t;
+
+void debounceFSM_init() {
+	buttonDebounce = BUTTON_UP;
+}
+
+void debounceFSM_update() {
+	switch (buttonDebounce) {
+	case BUTTON_UP:
+		if(BSP_PB_GetState(BUTTON_USER)) {
+			buttonDebounce = BUTTON_FALLING;
+			delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
+		}
+		break;
+	case BUTTON_FALLING:
+		if(delayRead(&buttonDelay)) {
+			if(BSP_PB_GetState(BUTTON_USER)) {
+				buttonDebounce = BUTTON_DOWN;
+				buttonPressed();
+			}
+			else {
+				buttonDebounce = BUTTON_UP;
+			}
+		}
+		break;
+	case BUTTON_DOWN:
+		if(!BSP_PB_GetState(BUTTON_USER)) {
+			buttonDebounce = BUTTON_RAISING;
+			delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
+		}
+		break;
+	case BUTTON_RAISING:
+		if(delayRead(&buttonDelay)) {
+			if(!BSP_PB_GetState(BUTTON_USER)) {
+				buttonDebounce = BUTTON_UP;
+				buttonReleased();
+			}
+			else {
+				buttonDebounce = BUTTON_DOWN;
+			}
+
+		}
+		break;
+	}
+}

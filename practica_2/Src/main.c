@@ -81,25 +81,24 @@ int main(void) {
 	while (1) {
 		if(delayRead(&delayLed1)) {
 			BSP_LED_Toggle(LED1);
-			delayInit(&delayLed1, LED1_ON_PERIOD);
 		}
 		if(delayRead(&delayLed2)) {
 			BSP_LED_Toggle(LED2);
-			delayInit(&delayLed2, LED2_ON_PERIOD);
 		}
 		if(delayRead(&delayLed3)) {
 			BSP_LED_Toggle(LED3);
-			delayInit(&delayLed3, LED3_ON_PERIOD);
 		}
 	}
 }
 
 void delayInit( delay_t * delay, tick_t duration ) {
+	if(delay == NULL) return;
 	delay->duration = duration;
 	delay->running = false;
 }
 
 bool_t delayRead( delay_t * delay ) {
+	if(delay == NULL) return false;
 	if(!delay->running) {
 		delay->startTime = HAL_GetTick();
 		delay->running = true;
@@ -112,6 +111,7 @@ bool_t delayRead( delay_t * delay ) {
 }
 
 void delayWrite( delay_t * delay, tick_t duration ) {
+	if(delay == NULL) return;
 	delay->duration = duration;
 }
 
