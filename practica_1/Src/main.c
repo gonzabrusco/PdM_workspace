@@ -80,7 +80,7 @@ int main(void) {
 
 	/* Infinite loop */
 	while (1) {
-		for (uint8_t i = 0; i < sizeof(ledSequence) / sizeof(Led_TypeDef); i++) {
+		for (uint8_t i = 0; i < sizeof(ledSequence) / sizeof(ledSequence[0]); i++) {
 			if (BSP_PB_GetState(BUTTON_USER)) invertLedSequence(ledSequence, sizeof(ledSequence) / sizeof(Led_TypeDef));
 			BSP_LED_On(ledSequence[i]);
 			HAL_Delay(200);

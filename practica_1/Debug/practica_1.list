@@ -3718,7 +3718,7 @@ int main(void) {
 
 	/* Infinite loop */
 	while (1) {
-		for (uint8_t i = 0; i < sizeof(ledSequence) / sizeof(Led_TypeDef); i++) {
+		for (uint8_t i = 0; i < sizeof(ledSequence) / sizeof(ledSequence[0]); i++) {
  8001844:	2300      	movs	r3, #0
  8001846:	71fb      	strb	r3, [r7, #7]
  8001848:	e02e      	b.n	80018a8 <main+0x9c>
@@ -3762,7 +3762,7 @@ int main(void) {
 			HAL_Delay(200);
  800189c:	20c8      	movs	r0, #200	; 0xc8
  800189e:	f7fe ffe7 	bl	8000870 <HAL_Delay>
-		for (uint8_t i = 0; i < sizeof(ledSequence) / sizeof(Led_TypeDef); i++) {
+		for (uint8_t i = 0; i < sizeof(ledSequence) / sizeof(ledSequence[0]); i++) {
  80018a2:	79fb      	ldrb	r3, [r7, #7]
  80018a4:	3301      	adds	r3, #1
  80018a6:	71fb      	strb	r3, [r7, #7]
