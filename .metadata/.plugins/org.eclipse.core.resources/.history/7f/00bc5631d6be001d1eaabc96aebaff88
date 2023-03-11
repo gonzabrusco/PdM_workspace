@@ -1,0 +1,16 @@
+/*
+ * API_debounce.c
+ *
+ *  Created on: Mar 9, 2023
+ *      Author: gonza
+ */
+
+#include "API_debounce.h"
+
+void debounceFSM_init() {
+
+}
+
+void debounceFSM_update() {
+
+}
