@@ -1,0 +1,40 @@
+/*
+ * API_uart.c
+ *
+ *  Created on: Mar 12, 2023
+ *      Author: gonza
+ */
+
+#include <string.h>
+#include "API_uart.h"
+
+bool_t uartInit(UART_HandleTypeDef * uartHandle) {
+	if(uartHandle == NULL) return false;
+
+	if(HAL_UART_Init(uartHandle) != HAL_OK) {
+		return false;
+	}
+	return true;
+}
+
+void uartSendString(UART_HandleTypeDef * uartHandle, const uint8_t *pstring) {
+	if(uartHandle == NULL || pstring == NULL) return;
+	// Calculo de timeout:
+	// UART Baudrate = Bits por segundo
+	// Entonces 9600 bauds por segundo = 9600 bits por segundo => 1/9600 segundos por bit = 1000/9600 milisegundos por bit.
+	// 1 caracter del string = 10 bits en UART (8 bits del char + 1 partity + 1 stop)
+	// Entonces el timeout va a ser = (strlen(pstring)+10) * 10 * 1000 <- agregue 10 caracteres extras de seguridad para que el timeout tenga cierto margen.
+	uint16_t length = strlen((const char *)pstring);
+	HAL_UART_Transmit(uartHandle, (uint8_t *)pstring, length, ((length+10)*10000)/uartHandle->Init.BaudRate);
+}
+
+void uartSendStringSize(UART_HandleTypeDef * uartHandle, const uint8_t * pstring, uint16_t size) {
+	if(uartHandle == NULL || pstring == NULL || size == 0) return;
+	// Calculo de timeout igual que en uartSendString
+	HAL_UART_Transmit(uartHandle, (uint8_t *)pstring, size, ((size+10)*10000)/uartHandle->Init.BaudRate);
+}
+
+void uartReceiveStringSize(UART_HandleTypeDef * uartHandle, uint8_t * pstring, uint16_t size) {
+	if(uartHandle == NULL || pstring == NULL || size == 0) return;
+	HAL_UART_Receive(uartHandle, pstring, size, ((size+10)*10000)/uartHandle->Init.BaudRate);
+}

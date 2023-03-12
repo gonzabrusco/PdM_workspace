@@ -1,49 +1,33 @@
-13:04:11 **** Incremental Build of configuration Debug for project practica_4_p2 ****
+11:08:19 **** Incremental Build of configuration Debug for project practica_5 ****
 make -j8 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "practica_4_p2.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/gonza/Repo/PdM_workspace/practica_4_p2/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="practica_4_p2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: practica_4_p2.elf
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc "../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.d" -MT"Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Drivers/Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/Core/Src/stm32f4xx_it.d" -MT"Drivers/Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc "../Drivers/API/src/API_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/API/src/API_uart.d" -MT"Drivers/API/src/API_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/src/API_uart.o"
+../Drivers/API/src/API_uart.c: In function 'uartInit':
+../Drivers/API/src/API_uart.c:29:17: error: expected expression before ')' token
+   29 |  for(uint8_t i; )
+      |                 ^
+../Drivers/API/src/API_uart.c:29:14: warning: unused variable 'i' [-Wunused-variable]
+   29 |  for(uint8_t i; )
+      |              ^
+../Drivers/API/src/API_uart.c:31:1: warning: control reaches end of non-void function [-Wreturn-type]
+   31 | }
+      | ^
+make: *** [Drivers/API/src/subdir.mk:25: Drivers/API/src/API_uart.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+11:08:26 **** Incremental Build of configuration Debug for project practica_5 ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/API/src/API_uart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_5/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/API/src/API_uart.d" -MT"Drivers/API/src/API_uart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/src/API_uart.o"
+arm-none-eabi-gcc -o "practica_5.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/gonza/Repo/PdM_workspace/practica_5/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="practica_5.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: practica_5.elf
  
-arm-none-eabi-size   practica_4_p2.elf 
-arm-none-eabi-objdump -h -S  practica_4_p2.elf  > "practica_4_p2.list"
+arm-none-eabi-size   practica_5.elf 
+arm-none-eabi-objdump -h -S  practica_5.elf  > "practica_5.list"
    text	   data	    bss	    dec	    hex	filename
-   7112	     36	   1588	   8736	   2220	practica_4_p2.elf
+   9636	     72	   1656	  11364	   2c64	practica_5.elf
 Finished building: default.size.stdout
  
-Finished building: practica_4_p2.list
- 
-13:04:16 **** Incremental Build of configuration Debug for project practica_4_p2 ****
-make -j8 all 
-arm-none-eabi-size   practica_4_p2.elf 
-   text	   data	    bss	    dec	    hex	filename
-   7112	     36	   1588	   8736	   2220	practica_4_p2.elf
-Finished building: default.size.stdout
- 
-13:06:47 **** Incremental Build of configuration Debug for project practica_4_p2 ****
-make -j8 all 
-arm-none-eabi-gcc "../Drivers/API/src/API_debounce.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/API/src/API_debounce.d" -MT"Drivers/API/src/API_debounce.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/src/API_debounce.o"
-arm-none-eabi-gcc -o "practica_4_p2.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/gonza/Repo/PdM_workspace/practica_4_p2/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="practica_4_p2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: practica_4_p2.elf
- 
-arm-none-eabi-size   practica_4_p2.elf 
-arm-none-eabi-objdump -h -S  practica_4_p2.elf  > "practica_4_p2.list"
-   text	   data	    bss	    dec	    hex	filename
-   7108	     36	   1588	   8732	   221c	practica_4_p2.elf
-Finished building: default.size.stdout
- 
-Finished building: practica_4_p2.list
- 
-13:11:19 **** Incremental Build of configuration Debug for project practica_4_p2 ****
-make -j8 all 
-arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F429ZITx -DSTM32F4 -DNUCLEO_F429ZI -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Inc -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/BSP/STM32F4xx_Nucleo_144" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/Core/Inc" -I"/home/gonza/Repo/PdM_workspace/practica_4_p2/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
-arm-none-eabi-gcc -o "practica_4_p2.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/gonza/Repo/PdM_workspace/practica_4_p2/STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="practica_4_p2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: practica_4_p2.elf
- 
-arm-none-eabi-size   practica_4_p2.elf 
-arm-none-eabi-objdump -h -S  practica_4_p2.elf  > "practica_4_p2.list"
-   text	   data	    bss	    dec	    hex	filename
-   7116	     36	   1588	   8740	   2224	practica_4_p2.elf
-Finished building: default.size.stdout
- 
-Finished building: practica_4_p2.list
+Finished building: practica_5.list
  
