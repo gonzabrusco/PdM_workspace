@@ -74,21 +74,26 @@ int main(void) {
 	BSP_LED_Init(LED1);
 	/* Initialize BSP Led for LED2 */
 	BSP_LED_Init(LED2);
-	/* Initialize BSP Led for LE3 */
+	/* Initialize BSP Led for LED3 */
 	BSP_LED_Init(LED3);
 
+	// Inicializo el delay
 	delayInit(&delayLed, LED_ON_OFF_TIME);
 
 	/* Infinite loop */
 	while (1) {
 		if(delayRead(&delayLed)) {
+			// El tiempo de delay se cumplio
 			if(!ledIsOn) {
+				// El led estaba apagado, lo enciendo
 				BSP_LED_On(ledSequence[i]);
 				ledIsOn = true;
 			}
 			else {
+				// El led estaba prendido, lo apago
 				BSP_LED_Off(ledSequence[i]);
 				ledIsOn = false;
+				// Paso al siguiente led del array
 				i = (i + 1) % (sizeof(ledSequence) / sizeof(Led_TypeDef));
 			}
 		}

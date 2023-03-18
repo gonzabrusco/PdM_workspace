@@ -353,31 +353,31 @@ Disassembly of section .text:
  80004ee:	bf00      	nop
 
 080004f0 <delayInit>:
+/*
+ * @brief Inicializa un delay
+ * @param [in] delay: puntero a la variable que almacena el delay
+ * @param [in] duration: la duracion del delay
  */
-
-#include "API_delay.h"
-#include "stm32f4xx_hal.h"  		/* <- HAL include */
-
 void delayInit( delay_t * delay, tick_t duration ) {
  80004f0:	b480      	push	{r7}
  80004f2:	b083      	sub	sp, #12
  80004f4:	af00      	add	r7, sp, #0
  80004f6:	6078      	str	r0, [r7, #4]
  80004f8:	6039      	str	r1, [r7, #0]
-	if(delay == NULL) return;
+	if(delay == NULL) return; // Chequeo de parametros
  80004fa:	687b      	ldr	r3, [r7, #4]
  80004fc:	2b00      	cmp	r3, #0
  80004fe:	d006      	beq.n	800050e <delayInit+0x1e>
-	delay->duration = duration;
+	delay->duration = duration; // Guardo duracion
  8000500:	687b      	ldr	r3, [r7, #4]
  8000502:	683a      	ldr	r2, [r7, #0]
  8000504:	605a      	str	r2, [r3, #4]
-	delay->running = false;
+	delay->running = false; // Inicializa frenado
  8000506:	687b      	ldr	r3, [r7, #4]
  8000508:	2200      	movs	r2, #0
  800050a:	721a      	strb	r2, [r3, #8]
  800050c:	e000      	b.n	8000510 <delayInit+0x20>
-	if(delay == NULL) return;
+	if(delay == NULL) return; // Chequeo de parametros
  800050e:	bf00      	nop
 }
  8000510:	370c      	adds	r7, #12
@@ -386,13 +386,17 @@ void delayInit( delay_t * delay, tick_t duration ) {
  8000518:	4770      	bx	lr
 
 0800051a <delayRead>:
-
+ * @brief Lee un delay
+ * @param [in] delay: puntero a la variable que almacena el delay
+ * @param [in] duration: la duracion del delay
+ * @return true si se cumplio el delay, false en caso contrario
+ */
 bool_t delayRead( delay_t * delay ) {
  800051a:	b580      	push	{r7, lr}
  800051c:	b082      	sub	sp, #8
  800051e:	af00      	add	r7, sp, #0
  8000520:	6078      	str	r0, [r7, #4]
-	if(delay == NULL) return false;
+	if(delay == NULL) return false; // Chequeo de parametros
  8000522:	687b      	ldr	r3, [r7, #4]
  8000524:	2b00      	cmp	r3, #0
  8000526:	d101      	bne.n	800052c <delayRead+0x12>
@@ -405,6 +409,7 @@ bool_t delayRead( delay_t * delay ) {
  8000534:	b2db      	uxtb	r3, r3
  8000536:	2b00      	cmp	r3, #0
  8000538:	d008      	beq.n	800054c <delayRead+0x32>
+		// No esta ejecutandose, tomo marca de tiempo y lo marco como corriendo
 		delay->startTime = HAL_GetTick();
  800053a:	f000 f963 	bl	8000804 <HAL_GetTick>
  800053e:	4602      	mov	r2, r0
@@ -426,6 +431,7 @@ bool_t delayRead( delay_t * delay ) {
  800055a:	685b      	ldr	r3, [r3, #4]
  800055c:	429a      	cmp	r2, r3
  800055e:	d304      	bcc.n	800056a <delayRead+0x50>
+		// Se cumplio el tiempo, marco el delay como frenado y retorno avisando que termino el tiempo.
 		delay->running = false;
  8000560:	687b      	ldr	r3, [r7, #4]
  8000562:	2200      	movs	r2, #0
@@ -3507,11 +3513,12 @@ int main(void) {
 	BSP_LED_Init(LED2);
  8001716:	2001      	movs	r0, #1
  8001718:	f7fe ff2c 	bl	8000574 <BSP_LED_Init>
-	/* Initialize BSP Led for LE3 */
+	/* Initialize BSP Led for LED3 */
 	BSP_LED_Init(LED3);
  800171c:	2002      	movs	r0, #2
  800171e:	f7fe ff29 	bl	8000574 <BSP_LED_Init>
 
+	// Inicializo el delay
 	delayInit(&delayLed, LED_ON_OFF_TIME);
  8001722:	1d3b      	adds	r3, r7, #4
  8001724:	21c8      	movs	r1, #200	; 0xc8
@@ -3527,12 +3534,14 @@ int main(void) {
  8001734:	4603      	mov	r3, r0
  8001736:	2b00      	cmp	r3, #0
  8001738:	d0f8      	beq.n	800172c <main+0x44>
+			// El tiempo de delay se cumplio
 			if(!ledIsOn) {
  800173a:	7dbb      	ldrb	r3, [r7, #22]
  800173c:	f083 0301 	eor.w	r3, r3, #1
  8001740:	b2db      	uxtb	r3, r3
  8001742:	2b00      	cmp	r3, #0
  8001744:	d00a      	beq.n	800175c <main+0x74>
+				// El led estaba apagado, lo enciendo
 				BSP_LED_On(ledSequence[i]);
  8001746:	7dfb      	ldrb	r3, [r7, #23]
  8001748:	3318      	adds	r3, #24
@@ -3546,6 +3555,7 @@ int main(void) {
  800175a:	e7e7      	b.n	800172c <main+0x44>
 			}
 			else {
+				// El led estaba prendido, lo apago
 				BSP_LED_Off(ledSequence[i]);
  800175c:	7dfb      	ldrb	r3, [r7, #23]
  800175e:	3318      	adds	r3, #24
@@ -3556,6 +3566,7 @@ int main(void) {
 				ledIsOn = false;
  800176c:	2300      	movs	r3, #0
  800176e:	75bb      	strb	r3, [r7, #22]
+				// Paso al siguiente led del array
 				i = (i + 1) % (sizeof(ledSequence) / sizeof(Led_TypeDef));
  8001770:	7dfb      	ldrb	r3, [r7, #23]
  8001772:	3301      	adds	r3, #1
