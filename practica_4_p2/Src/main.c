@@ -33,6 +33,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+#define LED_ON_OFF_PERIOD_A				 100
+#define LED_ON_OFF_PERIOD_B				 500
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 /* UART handler declaration */
@@ -52,7 +54,6 @@ static void Error_Handler(void);
  */
 int main(void) {
 	delay_t ledDelay;
-	tick_t ledDuration;
 
 	/* STM32F4xx HAL library initialization:
 	 - Configure the Flash prefetch
@@ -74,25 +75,28 @@ int main(void) {
 
 	// Inicializo MEF
 	debounceFSM_init();
-	ledDuration = LED_ON_OFF_PERIOD_A;
-	delayInit(&ledDelay, ledDuration);
+
+	// Inicializo delay
+	delayInit(&ledDelay, LED_ON_OFF_PERIOD_A);
 
 	/* Infinite loop */
 	while (1) {
 		debounceFSM_update(); // Actualizo MEF
 		if(readKey()) {
-			switch(ledDuration) {
+			// Ocurrio un flanco negativo en el pulsador
+			// Procedo a cambiar la duracion del periodo del led (alternandola)
+			switch(ledDelay.duration) {
 			case LED_ON_OFF_PERIOD_A:
-				ledDuration = LED_ON_OFF_PERIOD_B;
+				delayWrite(&ledDelay, LED_ON_OFF_PERIOD_B); // Actualizo la duracion del delay
 				break;
 			case LED_ON_OFF_PERIOD_B:
-				ledDuration = LED_ON_OFF_PERIOD_A;
+				delayWrite(&ledDelay, LED_ON_OFF_PERIOD_A); // Actualizo la duracion del delay
 				break;
 			}
 		}
 		if(delayRead(&ledDelay)) {
-			delayWrite(&ledDelay, ledDuration);
-			BSP_LED_Toggle(LED2);
+			// Paso el tiempo de delay.
+			BSP_LED_Toggle(LED2); // Togleo el led
 		}
 	}
 }

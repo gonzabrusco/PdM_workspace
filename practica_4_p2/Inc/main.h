@@ -47,9 +47,6 @@
 #define USARTx_RX_GPIO_PORT              GPIOD
 #define USARTx_RX_AF                     GPIO_AF7_USART3
 
-#define LED_ON_OFF_PERIOD_A				 100
-#define LED_ON_OFF_PERIOD_B				 500
-
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
