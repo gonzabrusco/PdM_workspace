@@ -53,15 +53,8 @@ typedef enum{
 #define USARTx_RX_GPIO_PORT              GPIOD
 #define USARTx_RX_AF                     GPIO_AF7_USART3
 
-#define BUTTON_DEBOUNCE_TIME	 		 40
-
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
-
-void debounceFSM_init();
-void debounceFSM_update();
-void buttonPressed();
-void buttonReleased();
 
 #endif /* __MAIN_H */
 

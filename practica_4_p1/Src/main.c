@@ -32,6 +32,8 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
+// Tiempo de debounce del pulsador
+#define BUTTON_DEBOUNCE_TIME	 		 40
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 debounceState_t buttonDebounce;
@@ -44,6 +46,23 @@ UART_HandleTypeDef UartHandle;
 
 static void SystemClock_Config(void);
 static void Error_Handler(void);
+
+/*
+ * @brief Inicializa la maquina de estados del antirrebote del pulsador
+ */
+static void debounceFSM_init();
+/*
+ * @brief Actualiza la maquina de estados del antirrebote del pulsador
+ */
+static void debounceFSM_update();
+/*
+ * @brief Ejecuta las acciones correspondientes cuando se presiona el pulsador
+ */
+static void buttonPressed();
+/*
+ * @brief Ejecuta las acciones correspondientes cuando se suelta el pulsador
+ */
+static void buttonReleased();
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -80,55 +99,75 @@ int main(void) {
 
 	/* Infinite loop */
 	while (1) {
-		debounceFSM_update();
+		debounceFSM_update(); // Actualizo la maquina de estados
 	}
 }
 
-
+/*
+ * @brief Ejecuta las acciones correspondientes cuando se presiona el pulsador
+ */
 void buttonPressed() {
 	BSP_LED_Toggle(LED1);
 }
 
+/*
+ * @brief Ejecuta las acciones correspondientes cuando se suelta el pulsador
+ */
 void buttonReleased() {
 	BSP_LED_Toggle(LED3);
 }
 
+/*
+ * @brief Inicializa la maquina de estados del antirrebote del pulsador
+ */
 void debounceFSM_init() {
-	buttonDebounce = BUTTON_UP;
-	delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
+	buttonDebounce = BUTTON_UP; // La MEF inicializa con el pulsador sin presionar
+	delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME); // Inicializo el delay
 }
 
-
+/*
+ * @brief Actualiza la maquina de estados del antirrebote del pulsador
+ */
 void debounceFSM_update() {
 	switch (buttonDebounce) {
 	case BUTTON_UP:
 		if(BSP_PB_GetState(BUTTON_USER)) {
+			// Se detecto que presionaron el pulsador, inicio proceso antirrebote.
 			buttonDebounce = BUTTON_FALLING;
 		}
 		break;
 	case BUTTON_FALLING:
+		// Espero el tiempo configurado antes de volver a chequear el valor del pulsador
 		if(delayRead(&buttonDelay)) {
+			// Paso el tiempo de delay
 			if(BSP_PB_GetState(BUTTON_USER)) {
+				// El pulsador sigue presionado, indico que efectivamente se presionó
 				buttonDebounce = BUTTON_DOWN;
-				buttonPressed();
+				buttonPressed(); // Realizo accion correspondiente a la pulsacion del pulsador
 			}
 			else {
+				// Paso el tiempo pero no estaba presionado, lo interpreto como un rebote, indico que el pulsador sigue NO presionado.
 				buttonDebounce = BUTTON_UP;
 			}
 		}
 		break;
 	case BUTTON_DOWN:
 		if(!BSP_PB_GetState(BUTTON_USER)) {
+			// Se detecto que soltaron el pulsador, inicio proceso antirrebote.
 			buttonDebounce = BUTTON_RAISING;
 		}
 		break;
 	case BUTTON_RAISING:
+		// Espero el tiempo configurado antes de volver a chequear el valor del pulsador
 		if(delayRead(&buttonDelay)) {
+			// Paso el tiempo de delay
 			if(!BSP_PB_GetState(BUTTON_USER)) {
+				// El pulsador sigue sin ser presionado, indico que efectivamente se soltó
 				buttonDebounce = BUTTON_UP;
-				buttonReleased();
+				buttonReleased(); // Realizo accion correspondiente a la liberación del pulsador
 			}
 			else {
+				// Paso el tiempo pero estaba presionado, lo interpreto como un rebote, indico que el pulsador sigue presionado.
 				buttonDebounce = BUTTON_DOWN;
 			}
 
