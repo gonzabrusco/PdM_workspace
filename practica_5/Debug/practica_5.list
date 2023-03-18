@@ -7,45 +7,45 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00002390  080001ac  080001ac  000101ac  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000060  0800253c  0800253c  0001253c  2**2
+  2 .rodata       00000084  0800253c  0800253c  0001253c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  0800259c  0800259c  00020040  2**0
+  3 .ARM.extab    00000000  080025c0  080025c0  0002001c  2**0
                   CONTENTS
-  4 .ARM          00000008  0800259c  0800259c  0001259c  2**2
+  4 .ARM          00000008  080025c0  080025c0  000125c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  080025a4  080025a4  00020040  2**0
+  5 .preinit_array 00000000  080025c8  080025c8  0002001c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080025a4  080025a4  000125a4  2**2
+  6 .init_array   00000004  080025c8  080025c8  000125c8  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  080025a8  080025a8  000125a8  2**2
+  7 .fini_array   00000004  080025cc  080025cc  000125cc  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000040  20000000  080025ac  00020000  2**2
+  8 .data         0000001c  20000000  080025d0  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .ccmram       00000000  10000000  10000000  00020040  2**0
+  9 .ccmram       00000000  10000000  10000000  0002001c  2**0
                   CONTENTS
- 10 .bss          00000078  20000040  20000040  00020040  2**2
+ 10 .bss          00000078  2000001c  2000001c  0002001c  2**2
                   ALLOC
- 11 ._user_heap_stack 00000600  200000b8  200000b8  00020040  2**0
+ 11 ._user_heap_stack 00000604  20000094  20000094  0002001c  2**0
                   ALLOC
- 12 .ARM.attributes 00000030  00000000  00000000  00020040  2**0
+ 12 .ARM.attributes 00000030  00000000  00000000  0002001c  2**0
                   CONTENTS, READONLY
- 13 .debug_info   00008e97  00000000  00000000  00020070  2**0
+ 13 .debug_info   00008e75  00000000  00000000  0002004c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 0000199e  00000000  00000000  00028f07  2**0
+ 14 .debug_abbrev 0000198c  00000000  00000000  00028ec1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 000007a0  00000000  00000000  0002a8a8  2**3
+ 15 .debug_aranges 000007a0  00000000  00000000  0002a850  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_ranges 000006d8  00000000  00000000  0002b048  2**3
+ 16 .debug_ranges 000006d8  00000000  00000000  0002aff0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  00025c3c  00000000  00000000  0002b720  2**0
+ 17 .debug_macro  00025c48  00000000  00000000  0002b6c8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000c22d  00000000  00000000  0005135c  2**0
+ 18 .debug_line   0000c22c  00000000  00000000  00051310  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000e1a81  00000000  00000000  0005d589  2**0
+ 19 .debug_str    000e1aaa  00000000  00000000  0005d53c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000050  00000000  00000000  0013f00a  2**0
+ 20 .comment      00000050  00000000  00000000  0013efe6  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  00001c74  00000000  00000000  0013f05c  2**2
+ 21 .debug_frame  00001c74  00000000  00000000  0013f038  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -62,7 +62,7 @@ Disassembly of section .text:
  80001be:	2301      	movs	r3, #1
  80001c0:	7023      	strb	r3, [r4, #0]
  80001c2:	bd10      	pop	{r4, pc}
- 80001c4:	20000040 	.word	0x20000040
+ 80001c4:	2000001c 	.word	0x2000001c
  80001c8:	00000000 	.word	0x00000000
  80001cc:	08002524 	.word	0x08002524
 
@@ -75,7 +75,7 @@ Disassembly of section .text:
  80001da:	f3af 8000 	nop.w
  80001de:	bd08      	pop	{r3, pc}
  80001e0:	00000000 	.word	0x00000000
- 80001e4:	20000044 	.word	0x20000044
+ 80001e4:	20000020 	.word	0x20000020
  80001e8:	08002524 	.word	0x08002524
 
 080001ec <strlen>:
@@ -365,7 +365,7 @@ Disassembly of section .text:
 static delay_t buttonDelay;
 static bool_t buttonRisingEdge = false;
 static bool_t buttonFallingEdge = false;
-static bool_t buttonDown = false;
+static bool_t buttonPushedDown = false;
 
 void debounceFSM_init() {
  8000500:	b580      	push	{r7, lr}
@@ -375,7 +375,7 @@ void debounceFSM_init() {
  8000504:	2100      	movs	r1, #0
  8000506:	2000      	movs	r0, #0
  8000508:	f000 f9d4 	bl	80008b4 <BSP_PB_Init>
-	delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME);
+	delayInit(&buttonDelay, BUTTON_DEBOUNCE_TIME); // Inicializo el delay antirrebote
  800050c:	2128      	movs	r1, #40	; 0x28
  800050e:	4808      	ldr	r0, [pc, #32]	; (8000530 <debounceFSM_init+0x30>)
  8000510:	f000 f8b6 	bl	8000680 <delayInit>
@@ -391,18 +391,18 @@ void debounceFSM_init() {
  8000520:	4b06      	ldr	r3, [pc, #24]	; (800053c <debounceFSM_init+0x3c>)
  8000522:	2200      	movs	r2, #0
  8000524:	701a      	strb	r2, [r3, #0]
-	buttonDown = false;
+	buttonPushedDown = false;
  8000526:	4b06      	ldr	r3, [pc, #24]	; (8000540 <debounceFSM_init+0x40>)
  8000528:	2200      	movs	r2, #0
  800052a:	701a      	strb	r2, [r3, #0]
 }
  800052c:	bf00      	nop
  800052e:	bd80      	pop	{r7, pc}
- 8000530:	20000060 	.word	0x20000060
- 8000534:	2000005c 	.word	0x2000005c
- 8000538:	2000006c 	.word	0x2000006c
- 800053c:	2000006d 	.word	0x2000006d
- 8000540:	2000006e 	.word	0x2000006e
+ 8000530:	2000003c 	.word	0x2000003c
+ 8000534:	20000038 	.word	0x20000038
+ 8000538:	20000048 	.word	0x20000048
+ 800053c:	20000049 	.word	0x20000049
+ 8000540:	2000004a 	.word	0x2000004a
 
 08000544 <debounceFSM_update>:
 
@@ -428,6 +428,7 @@ void debounceFSM_update() {
  800056e:	4603      	mov	r3, r0
  8000570:	2b00      	cmp	r3, #0
  8000572:	d041      	beq.n	80005f8 <debounceFSM_update+0xb4>
+			// Se detecto que presionaron el pulsador, inicio proceso antirrebote.
 			buttonDebounce = BUTTON_FALLING;
  8000574:	4b25      	ldr	r3, [pc, #148]	; (800060c <debounceFSM_update+0xc8>)
  8000576:	2201      	movs	r2, #1
@@ -436,18 +437,21 @@ void debounceFSM_update() {
 		break;
  800057a:	e03d      	b.n	80005f8 <debounceFSM_update+0xb4>
 	case BUTTON_FALLING:
+		// Espero el tiempo configurado antes de volver a chequear el valor del pulsador
 		if(delayRead(&buttonDelay)) {
  800057c:	4824      	ldr	r0, [pc, #144]	; (8000610 <debounceFSM_update+0xcc>)
  800057e:	f000 f894 	bl	80006aa <delayRead>
  8000582:	4603      	mov	r3, r0
  8000584:	2b00      	cmp	r3, #0
  8000586:	d039      	beq.n	80005fc <debounceFSM_update+0xb8>
+			// Paso el tiempo de delay antirrebote
 			if(BSP_PB_GetState(BUTTON_USER)) {
  8000588:	2000      	movs	r0, #0
  800058a:	f000 f9e9 	bl	8000960 <BSP_PB_GetState>
  800058e:	4603      	mov	r3, r0
  8000590:	2b00      	cmp	r3, #0
  8000592:	d009      	beq.n	80005a8 <debounceFSM_update+0x64>
+				// El pulsador sigue presionado, indico que efectivamente se presionó
 				buttonDebounce = BUTTON_DOWN;
  8000594:	4b1d      	ldr	r3, [pc, #116]	; (800060c <debounceFSM_update+0xc8>)
  8000596:	2202      	movs	r2, #2
@@ -456,12 +460,12 @@ void debounceFSM_update() {
  800059a:	4b1e      	ldr	r3, [pc, #120]	; (8000614 <debounceFSM_update+0xd0>)
  800059c:	2201      	movs	r2, #1
  800059e:	701a      	strb	r2, [r3, #0]
-				buttonDown = true;
+				buttonPushedDown = true;
  80005a0:	4b1d      	ldr	r3, [pc, #116]	; (8000618 <debounceFSM_update+0xd4>)
  80005a2:	2201      	movs	r2, #1
  80005a4:	701a      	strb	r2, [r3, #0]
-			}
 			else {
+				// Paso el tiempo pero no estaba presionado, lo interpreto como un rebote, indico que el pulsador sigue NO presionado.
 				buttonDebounce = BUTTON_UP;
 			}
 		}
@@ -480,6 +484,7 @@ void debounceFSM_update() {
  80005b6:	4603      	mov	r3, r0
  80005b8:	2b00      	cmp	r3, #0
  80005ba:	d121      	bne.n	8000600 <debounceFSM_update+0xbc>
+			// Se detecto que soltaron el pulsador, inicio proceso antirrebote.
 			buttonDebounce = BUTTON_RAISING;
  80005bc:	4b13      	ldr	r3, [pc, #76]	; (800060c <debounceFSM_update+0xc8>)
  80005be:	2203      	movs	r2, #3
@@ -488,18 +493,21 @@ void debounceFSM_update() {
 		break;
  80005c2:	e01d      	b.n	8000600 <debounceFSM_update+0xbc>
 	case BUTTON_RAISING:
+		// Espero el tiempo configurado antes de volver a chequear el valor del pulsador
 		if(delayRead(&buttonDelay)) {
  80005c4:	4812      	ldr	r0, [pc, #72]	; (8000610 <debounceFSM_update+0xcc>)
  80005c6:	f000 f870 	bl	80006aa <delayRead>
  80005ca:	4603      	mov	r3, r0
  80005cc:	2b00      	cmp	r3, #0
  80005ce:	d019      	beq.n	8000604 <debounceFSM_update+0xc0>
+			// Paso el tiempo de delay antirrebote
 			if(!BSP_PB_GetState(BUTTON_USER)) {
  80005d0:	2000      	movs	r0, #0
  80005d2:	f000 f9c5 	bl	8000960 <BSP_PB_GetState>
  80005d6:	4603      	mov	r3, r0
  80005d8:	2b00      	cmp	r3, #0
  80005da:	d109      	bne.n	80005f0 <debounceFSM_update+0xac>
+				// El pulsador sigue sin ser presionado, indico que efectivamente se soltó
 				buttonDebounce = BUTTON_UP;
  80005dc:	4b0b      	ldr	r3, [pc, #44]	; (800060c <debounceFSM_update+0xc8>)
  80005de:	2200      	movs	r2, #0
@@ -508,14 +516,14 @@ void debounceFSM_update() {
  80005e2:	4b0e      	ldr	r3, [pc, #56]	; (800061c <debounceFSM_update+0xd8>)
  80005e4:	2201      	movs	r2, #1
  80005e6:	701a      	strb	r2, [r3, #0]
-				buttonDown = false;
+				buttonPushedDown = false;
  80005e8:	4b0b      	ldr	r3, [pc, #44]	; (8000618 <debounceFSM_update+0xd4>)
  80005ea:	2200      	movs	r2, #0
  80005ec:	701a      	strb	r2, [r3, #0]
 			else {
+				// Paso el tiempo pero estaba presionado, lo interpreto como un rebote, indico que el pulsador sigue presionado.
 				buttonDebounce = BUTTON_DOWN;
 			}
-
 		}
 		break;
  80005ee:	e009      	b.n	8000604 <debounceFSM_update+0xc0>
@@ -541,24 +549,28 @@ void debounceFSM_update() {
  8000606:	bf00      	nop
  8000608:	bd80      	pop	{r7, pc}
  800060a:	bf00      	nop
- 800060c:	2000005c 	.word	0x2000005c
- 8000610:	20000060 	.word	0x20000060
- 8000614:	2000006d 	.word	0x2000006d
- 8000618:	2000006e 	.word	0x2000006e
- 800061c:	2000006c 	.word	0x2000006c
+ 800060c:	20000038 	.word	0x20000038
+ 8000610:	2000003c 	.word	0x2000003c
+ 8000614:	20000049 	.word	0x20000049
+ 8000618:	2000004a 	.word	0x2000004a
+ 800061c:	20000048 	.word	0x20000048
 
-08000620 <buttonRisingEdgeOccurred>:
+08000620 <buttonReleased>:
 
-bool_t buttonRisingEdgeOccurred() {
+/*
+ * @brief Indica si se soltó el pulsador al menos una vez desde la última lectura de esta funcion
+ * @return Devuelve true si se soltó el pulsador al menos una vez desde la última lectura de esta funcion, false en caso contrario.
+ */
+bool_t buttonReleased() {
  8000620:	b480      	push	{r7}
  8000622:	b083      	sub	sp, #12
  8000624:	af00      	add	r7, sp, #0
 	bool_t ret = buttonRisingEdge;
- 8000626:	4b06      	ldr	r3, [pc, #24]	; (8000640 <buttonRisingEdgeOccurred+0x20>)
+ 8000626:	4b06      	ldr	r3, [pc, #24]	; (8000640 <buttonReleased+0x20>)
  8000628:	781b      	ldrb	r3, [r3, #0]
  800062a:	71fb      	strb	r3, [r7, #7]
 	buttonRisingEdge = false;
- 800062c:	4b04      	ldr	r3, [pc, #16]	; (8000640 <buttonRisingEdgeOccurred+0x20>)
+ 800062c:	4b04      	ldr	r3, [pc, #16]	; (8000640 <buttonReleased+0x20>)
  800062e:	2200      	movs	r2, #0
  8000630:	701a      	strb	r2, [r3, #0]
 	return ret;
@@ -569,20 +581,24 @@ bool_t buttonRisingEdgeOccurred() {
  8000638:	46bd      	mov	sp, r7
  800063a:	f85d 7b04 	ldr.w	r7, [sp], #4
  800063e:	4770      	bx	lr
- 8000640:	2000006c 	.word	0x2000006c
+ 8000640:	20000048 	.word	0x20000048
 
-08000644 <buttonFallingEdgeOccurred>:
+08000644 <buttonPressed>:
 
-bool_t buttonFallingEdgeOccurred() {
+/*
+ * @brief Indica si se presionó el pulsador al menos una vez desde la última lectura de esta funcion
+ * @return Devuelve true si se presionó el pulsador al menos una vez desde la última lectura de esta funcion, false en caso contrario.
+ */
+bool_t buttonPressed() {
  8000644:	b480      	push	{r7}
  8000646:	b083      	sub	sp, #12
  8000648:	af00      	add	r7, sp, #0
 	bool_t ret = buttonFallingEdge;
- 800064a:	4b06      	ldr	r3, [pc, #24]	; (8000664 <buttonFallingEdgeOccurred+0x20>)
+ 800064a:	4b06      	ldr	r3, [pc, #24]	; (8000664 <buttonPressed+0x20>)
  800064c:	781b      	ldrb	r3, [r3, #0]
  800064e:	71fb      	strb	r3, [r7, #7]
 	buttonFallingEdge = false;
- 8000650:	4b04      	ldr	r3, [pc, #16]	; (8000664 <buttonFallingEdgeOccurred+0x20>)
+ 8000650:	4b04      	ldr	r3, [pc, #16]	; (8000664 <buttonPressed+0x20>)
  8000652:	2200      	movs	r2, #0
  8000654:	701a      	strb	r2, [r3, #0]
 	return ret;
@@ -593,15 +609,19 @@ bool_t buttonFallingEdgeOccurred() {
  800065c:	46bd      	mov	sp, r7
  800065e:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000662:	4770      	bx	lr
- 8000664:	2000006d 	.word	0x2000006d
+ 8000664:	20000049 	.word	0x20000049
 
-08000668 <buttonPressed>:
+08000668 <buttonDown>:
 
-bool_t buttonPressed() {
+/*
+ * @brief Indica si el pulsador esta actualmente presionado
+ * @return Devuelve true si el pulsador esta actualmente presionado, false en caso contrario.
+ */
+bool_t buttonDown() {
  8000668:	b480      	push	{r7}
  800066a:	af00      	add	r7, sp, #0
-	return buttonDown;
- 800066c:	4b03      	ldr	r3, [pc, #12]	; (800067c <buttonPressed+0x14>)
+	return buttonPushedDown;
+ 800066c:	4b03      	ldr	r3, [pc, #12]	; (800067c <buttonDown+0x14>)
  800066e:	781b      	ldrb	r3, [r3, #0]
 }
  8000670:	4618      	mov	r0, r3
@@ -609,34 +629,34 @@ bool_t buttonPressed() {
  8000674:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000678:	4770      	bx	lr
  800067a:	bf00      	nop
- 800067c:	2000006e 	.word	0x2000006e
+ 800067c:	2000004a 	.word	0x2000004a
 
 08000680 <delayInit>:
+/*
+ * @brief Inicializa un delay
+ * @param [in] delay: puntero a la variable que almacena el delay
+ * @param [in] duration: la duracion del delay
  */
-
-#include "API_delay.h"
-#include "stm32f4xx_hal.h"
-
 void delayInit( delay_t * delay, tick_t duration ) {
  8000680:	b480      	push	{r7}
  8000682:	b083      	sub	sp, #12
  8000684:	af00      	add	r7, sp, #0
  8000686:	6078      	str	r0, [r7, #4]
  8000688:	6039      	str	r1, [r7, #0]
-	if(delay == NULL) return;
+	if(delay == NULL) return; // Chequeo de parametros
  800068a:	687b      	ldr	r3, [r7, #4]
  800068c:	2b00      	cmp	r3, #0
  800068e:	d006      	beq.n	800069e <delayInit+0x1e>
-	delay->duration = duration;
+	delay->duration = duration; // Guardo duracion
  8000690:	687b      	ldr	r3, [r7, #4]
  8000692:	683a      	ldr	r2, [r7, #0]
  8000694:	605a      	str	r2, [r3, #4]
-	delay->running = false;
+	delay->running = false; // Inicializa frenado
  8000696:	687b      	ldr	r3, [r7, #4]
  8000698:	2200      	movs	r2, #0
  800069a:	721a      	strb	r2, [r3, #8]
  800069c:	e000      	b.n	80006a0 <delayInit+0x20>
-	if(delay == NULL) return;
+	if(delay == NULL) return; // Chequeo de parametros
  800069e:	bf00      	nop
 }
  80006a0:	370c      	adds	r7, #12
@@ -645,13 +665,17 @@ void delayInit( delay_t * delay, tick_t duration ) {
  80006a8:	4770      	bx	lr
 
 080006aa <delayRead>:
-
+ * @brief Lee un delay
+ * @param [in] delay: puntero a la variable que almacena el delay
+ * @param [in] duration: la duracion del delay
+ * @return true si se cumplio el delay, false en caso contrario
+ */
 bool_t delayRead( delay_t * delay ) {
  80006aa:	b580      	push	{r7, lr}
  80006ac:	b082      	sub	sp, #8
  80006ae:	af00      	add	r7, sp, #0
  80006b0:	6078      	str	r0, [r7, #4]
-	if(delay == NULL) return false;
+	if(delay == NULL) return false; // Chequeo de parametros
  80006b2:	687b      	ldr	r3, [r7, #4]
  80006b4:	2b00      	cmp	r3, #0
  80006b6:	d101      	bne.n	80006bc <delayRead+0x12>
@@ -664,6 +688,7 @@ bool_t delayRead( delay_t * delay ) {
  80006c4:	b2db      	uxtb	r3, r3
  80006c6:	2b00      	cmp	r3, #0
  80006c8:	d008      	beq.n	80006dc <delayRead+0x32>
+		// No esta ejecutandose, tomo marca de tiempo y lo marco como corriendo
 		delay->startTime = HAL_GetTick();
  80006ca:	f000 fa23 	bl	8000b14 <HAL_GetTick>
  80006ce:	4602      	mov	r2, r0
@@ -685,6 +710,7 @@ bool_t delayRead( delay_t * delay ) {
  80006ea:	685b      	ldr	r3, [r3, #4]
  80006ec:	429a      	cmp	r2, r3
  80006ee:	d304      	bcc.n	80006fa <delayRead+0x50>
+		// Se cumplio el tiempo, marco el delay como frenado y retorno avisando que termino el tiempo.
 		delay->running = false;
  80006f0:	687b      	ldr	r3, [r7, #4]
  80006f2:	2200      	movs	r2, #0
@@ -702,19 +728,20 @@ bool_t delayRead( delay_t * delay ) {
  8000702:	bd80      	pop	{r7, pc}
 
 08000704 <uartInit>:
-#include "main.h"
 
-static UART_HandleTypeDef uartHandle;
-static char initMsg[] = "Uart Inicializada (115200 8N1)\n\r";
-
+/*
+ * @brief Inicializa la UART
+ * @return true si la UART se inicializo correctamente, false en caso contrario
+ */
 bool_t uartInit() {
  8000704:	b580      	push	{r7, lr}
  8000706:	af00      	add	r7, sp, #0
+	// Inicializo UART
 	uartHandle.Instance = USARTx;
  8000708:	4b13      	ldr	r3, [pc, #76]	; (8000758 <uartInit+0x54>)
  800070a:	4a14      	ldr	r2, [pc, #80]	; (800075c <uartInit+0x58>)
  800070c:	601a      	str	r2, [r3, #0]
-	uartHandle.Init.BaudRate = 115200;
+	uartHandle.Init.BaudRate = USART_BAUDRATE;
  800070e:	4b12      	ldr	r3, [pc, #72]	; (8000758 <uartInit+0x54>)
  8000710:	f44f 32e1 	mov.w	r2, #115200	; 0x1c200
  8000714:	605a      	str	r2, [r3, #4]
@@ -749,11 +776,13 @@ bool_t uartInit() {
  8000740:	4603      	mov	r3, r0
  8000742:	2b00      	cmp	r3, #0
  8000744:	d001      	beq.n	800074a <uartInit+0x46>
-		return false;
+		return false; // Indico que fallo la inicializacion
  8000746:	2300      	movs	r3, #0
  8000748:	e003      	b.n	8000752 <uartInit+0x4e>
 	}
-	uartSendString((uint8_t *)initMsg);
+
+	// Inicializacion exitosa, imprimo el mensaje y devuelvo true
+	uartSendString((uint8_t *)INIT_MSG);
  800074a:	4805      	ldr	r0, [pc, #20]	; (8000760 <uartInit+0x5c>)
  800074c:	f000 f80a 	bl	8000764 <uartSendString>
 	return true;
@@ -762,12 +791,16 @@ bool_t uartInit() {
  8000752:	4618      	mov	r0, r3
  8000754:	bd80      	pop	{r7, pc}
  8000756:	bf00      	nop
- 8000758:	20000070 	.word	0x20000070
+ 8000758:	2000004c 	.word	0x2000004c
  800075c:	40004800 	.word	0x40004800
- 8000760:	20000000 	.word	0x20000000
+ 8000760:	0800253c 	.word	0x0800253c
 
 08000764 <uartSendString>:
 
+/*
+ * @brief Imprime un string por UART
+ * @param [in] pstring: puntero al string a imprimir (debe terminar en '\0´)
+ */
 void uartSendString(uint8_t *pstring) {
  8000764:	b580      	push	{r7, lr}
  8000766:	b084      	sub	sp, #16
@@ -782,12 +815,12 @@ void uartSendString(uint8_t *pstring) {
 	// Entonces 9600 bauds por segundo = 9600 bits por segundo => 1/9600 segundos por bit = 1000/9600 milisegundos por bit.
 	// 1 caracter del string = 10 bits en UART (8 bits del char + 1 partity + 1 stop)
 	// Entonces el timeout va a ser = (strlen(pstring)+10) * 10 * 1000 <- agregue 10 caracteres extras de seguridad para que el timeout tenga cierto margen.
-	uint16_t length = strlen((const char *)pstring);
+	uint16_t length = strlen((const char *)pstring); // CAlculo el largo del string a enviar
  8000772:	6878      	ldr	r0, [r7, #4]
  8000774:	f7ff fd3a 	bl	80001ec <strlen>
  8000778:	4603      	mov	r3, r0
  800077a:	81fb      	strh	r3, [r7, #14]
-	HAL_UART_Transmit(&uartHandle, pstring, length, ((length+10)*10000)/uartHandle.Init.BaudRate);
+	HAL_UART_Transmit(&uartHandle, pstring, length, ((length+10)*10000)/uartHandle.Init.BaudRate); // Envio datos
  800077c:	89fb      	ldrh	r3, [r7, #14]
  800077e:	330a      	adds	r3, #10
  8000780:	f242 7210 	movw	r2, #10000	; 0x2710
@@ -808,7 +841,7 @@ void uartSendString(uint8_t *pstring) {
  80007a2:	46bd      	mov	sp, r7
  80007a4:	bd80      	pop	{r7, pc}
  80007a6:	bf00      	nop
- 80007a8:	20000070 	.word	0x20000070
+ 80007a8:	2000004c 	.word	0x2000004c
 
 080007ac <BSP_LED_Init>:
   *     @arg  LED1
@@ -895,8 +928,8 @@ void BSP_LED_Init(Led_TypeDef Led)
  800083c:	46bd      	mov	sp, r7
  800083e:	bd80      	pop	{r7, pc}
  8000840:	40023800 	.word	0x40023800
- 8000844:	0800257c 	.word	0x0800257c
- 8000848:	20000024 	.word	0x20000024
+ 8000844:	080025a0 	.word	0x080025a0
+ 8000848:	20000000 	.word	0x20000000
 
 0800084c <BSP_LED_On>:
   * @param  Led: Specifies the Led to be set on. 
@@ -926,8 +959,8 @@ void BSP_LED_On(Led_TypeDef Led)
  8000872:	46bd      	mov	sp, r7
  8000874:	bd80      	pop	{r7, pc}
  8000876:	bf00      	nop
- 8000878:	20000024 	.word	0x20000024
- 800087c:	0800257c 	.word	0x0800257c
+ 8000878:	20000000 	.word	0x20000000
+ 800087c:	080025a0 	.word	0x080025a0
 
 08000880 <BSP_LED_Off>:
   *     @arg  LED1
@@ -957,8 +990,8 @@ void BSP_LED_Off(Led_TypeDef Led)
  80008a6:	46bd      	mov	sp, r7
  80008a8:	bd80      	pop	{r7, pc}
  80008aa:	bf00      	nop
- 80008ac:	20000024 	.word	0x20000024
- 80008b0:	0800257c 	.word	0x0800257c
+ 80008ac:	20000000 	.word	0x20000000
+ 80008b0:	080025a0 	.word	0x080025a0
 
 080008b4 <BSP_PB_Init>:
   *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO 
@@ -1065,7 +1098,7 @@ void BSP_PB_Init(Button_TypeDef Button, ButtonMode_TypeDef ButtonMode)
  8000954:	bd80      	pop	{r7, pc}
  8000956:	bf00      	nop
  8000958:	40023800 	.word	0x40023800
- 800095c:	20000030 	.word	0x20000030
+ 800095c:	2000000c 	.word	0x2000000c
 
 08000960 <BSP_PB_GetState>:
   * @param  Button: Specifies the Button to be checked.
@@ -1093,7 +1126,7 @@ uint32_t BSP_PB_GetState(Button_TypeDef Button)
  8000982:	3708      	adds	r7, #8
  8000984:	46bd      	mov	sp, r7
  8000986:	bd80      	pop	{r7, pc}
- 8000988:	20000030 	.word	0x20000030
+ 8000988:	2000000c 	.word	0x2000000c
 
 0800098c <SystemInit>:
   *         configuration.
@@ -1417,9 +1450,9 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
  8000ada:	3708      	adds	r7, #8
  8000adc:	46bd      	mov	sp, r7
  8000ade:	bd80      	pop	{r7, pc}
- 8000ae0:	20000034 	.word	0x20000034
- 8000ae4:	2000003c 	.word	0x2000003c
- 8000ae8:	20000038 	.word	0x20000038
+ 8000ae0:	20000010 	.word	0x20000010
+ 8000ae4:	20000018 	.word	0x20000018
+ 8000ae8:	20000014 	.word	0x20000014
 
 08000aec <HAL_IncTick>:
  * @note This function is declared as __weak to be overwritten in case of other 
@@ -1445,8 +1478,8 @@ __weak void HAL_IncTick(void)
  8000b04:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000b08:	4770      	bx	lr
  8000b0a:	bf00      	nop
- 8000b0c:	2000003c 	.word	0x2000003c
- 8000b10:	200000b4 	.word	0x200000b4
+ 8000b0c:	20000018 	.word	0x20000018
+ 8000b10:	20000090 	.word	0x20000090
 
 08000b14 <HAL_GetTick>:
   * @note This function is declared as __weak to be overwritten in case of other 
@@ -1466,7 +1499,7 @@ __weak uint32_t HAL_GetTick(void)
  8000b20:	f85d 7b04 	ldr.w	r7, [sp], #4
  8000b24:	4770      	bx	lr
  8000b26:	bf00      	nop
- 8000b28:	200000b4 	.word	0x200000b4
+ 8000b28:	20000090 	.word	0x20000090
 
 08000b2c <__NVIC_SetPriorityGrouping>:
            In case of a conflict between priority grouping and available
@@ -3920,9 +3953,9 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  8001906:	bf00      	nop
  8001908:	40023c00 	.word	0x40023c00
  800190c:	40023800 	.word	0x40023800
- 8001910:	08002584 	.word	0x08002584
- 8001914:	20000034 	.word	0x20000034
- 8001918:	20000038 	.word	0x20000038
+ 8001910:	080025a8 	.word	0x080025a8
+ 8001914:	20000010 	.word	0x20000010
+ 8001918:	20000014 	.word	0x20000014
 
 0800191c <HAL_RCC_GetSysClockFreq>:
   *
@@ -4196,7 +4229,7 @@ uint32_t HAL_RCC_GetHCLKFreq(void)
  8001b34:	f85d 7b04 	ldr.w	r7, [sp], #4
  8001b38:	4770      	bx	lr
  8001b3a:	bf00      	nop
- 8001b3c:	20000034 	.word	0x20000034
+ 8001b3c:	20000010 	.word	0x20000010
 
 08001b40 <HAL_RCC_GetPCLK1Freq>:
   * @note   Each time PCLK1 changes, this function must be called to update the
@@ -4222,7 +4255,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  8001b5c:	4618      	mov	r0, r3
  8001b5e:	bd80      	pop	{r7, pc}
  8001b60:	40023800 	.word	0x40023800
- 8001b64:	08002594 	.word	0x08002594
+ 8001b64:	080025b8 	.word	0x080025b8
 
 08001b68 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -4248,7 +4281,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  8001b84:	4618      	mov	r0, r3
  8001b86:	bd80      	pop	{r7, pc}
  8001b88:	40023800 	.word	0x40023800
- 8001b8c:	08002594 	.word	0x08002594
+ 8001b8c:	080025b8 	.word	0x080025b8
 
 08001b90 <HAL_UART_Init>:
   * @param  huart  Pointer to a UART_HandleTypeDef structure that contains
@@ -5308,8 +5341,8 @@ int main(void) {
 		debounceFSM_update(); // Actualizo MEF del Pulsador
  800236c:	f7fe f8ea 	bl	8000544 <debounceFSM_update>
 		// Si hay flanco descendente, envio mensaje de aviso
-		if(buttonFallingEdgeOccurred()) {
- 8002370:	f7fe f968 	bl	8000644 <buttonFallingEdgeOccurred>
+		if(buttonPressed()) {
+ 8002370:	f7fe f968 	bl	8000644 <buttonPressed>
  8002374:	4603      	mov	r3, r0
  8002376:	2b00      	cmp	r3, #0
  8002378:	d003      	beq.n	8002382 <main+0x6e>
@@ -5319,8 +5352,8 @@ int main(void) {
  800237e:	f7fe f9f1 	bl	8000764 <uartSendString>
 		}
 		// Si hay flanco ascendente, envio mensaje de aviso
-		if(buttonRisingEdgeOccurred()) {
- 8002382:	f7fe f94d 	bl	8000620 <buttonRisingEdgeOccurred>
+		if(buttonReleased()) {
+ 8002382:	f7fe f94d 	bl	8000620 <buttonReleased>
  8002386:	4603      	mov	r3, r0
  8002388:	2b00      	cmp	r3, #0
  800238a:	d004      	beq.n	8002396 <main+0x82>
@@ -5329,9 +5362,9 @@ int main(void) {
  8002390:	4618      	mov	r0, r3
  8002392:	f7fe f9e7 	bl	8000764 <uartSendString>
 		}
-		// No se pedia por ejercicio, pero muestro por el LED2 el estado del pulsador.
-		if(buttonPressed()) {
- 8002396:	f7fe f967 	bl	8000668 <buttonPressed>
+		// No se pedia por ejercicio, pero muestro por el LED2 el estado del pulsador para mayor feedback del ejercicio.
+		if(buttonDown()) {
+ 8002396:	f7fe f967 	bl	8000668 <buttonDown>
  800239a:	4603      	mov	r3, r0
  800239c:	2b00      	cmp	r3, #0
  800239e:	d003      	beq.n	80023a8 <main+0x94>
@@ -5346,8 +5379,8 @@ int main(void) {
  80023aa:	f7fe fa69 	bl	8000880 <BSP_LED_Off>
 		debounceFSM_update(); // Actualizo MEF del Pulsador
  80023ae:	e7dd      	b.n	800236c <main+0x58>
- 80023b0:	0800253c 	.word	0x0800253c
- 80023b4:	0800255c 	.word	0x0800255c
+ 80023b0:	08002560 	.word	0x08002560
+ 80023b4:	08002580 	.word	0x08002580
 
 080023b8 <SystemClock_Config>:
  *            Main regulator output voltage  = Scale1 mode
@@ -5572,15 +5605,15 @@ LoopFillZerobss:
   ldr   sp, =_estack       /* set stack pointer */
  80024c0:	20030000 	.word	0x20030000
   ldr  r3, =_sidata
- 80024c4:	080025ac 	.word	0x080025ac
+ 80024c4:	080025d0 	.word	0x080025d0
   ldr  r0, =_sdata
  80024c8:	20000000 	.word	0x20000000
   ldr  r3, =_edata
- 80024cc:	20000040 	.word	0x20000040
+ 80024cc:	2000001c 	.word	0x2000001c
   ldr  r2, =_sbss
- 80024d0:	20000040 	.word	0x20000040
+ 80024d0:	2000001c 	.word	0x2000001c
   ldr  r3, = _ebss
- 80024d4:	200000b8 	.word	0x200000b8
+ 80024d4:	20000094 	.word	0x20000094
 
 080024d8 <ADC_IRQHandler>:
  * @retval None       
@@ -5618,10 +5651,10 @@ Infinite_Loop:
  800250e:	4798      	blx	r3
  8002510:	3601      	adds	r6, #1
  8002512:	e7f2      	b.n	80024fa <__libc_init_array+0x1e>
- 8002514:	080025a4 	.word	0x080025a4
- 8002518:	080025a4 	.word	0x080025a4
- 800251c:	080025a4 	.word	0x080025a4
- 8002520:	080025a8 	.word	0x080025a8
+ 8002514:	080025c8 	.word	0x080025c8
+ 8002518:	080025c8 	.word	0x080025c8
+ 800251c:	080025c8 	.word	0x080025c8
+ 8002520:	080025cc 	.word	0x080025cc
 
 08002524 <_init>:
  8002524:	b5f8      	push	{r3, r4, r5, r6, r7, lr}

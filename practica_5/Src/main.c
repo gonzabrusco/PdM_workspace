@@ -81,15 +81,15 @@ int main(void) {
 	while (1) {
 		debounceFSM_update(); // Actualizo MEF del Pulsador
 		// Si hay flanco descendente, envio mensaje de aviso
-		if(buttonFallingEdgeOccurred()) {
+		if(buttonPressed()) {
 			uartSendString((uint8_t *)buttonFallingEdgeOcurredMsg);
 		}
 		// Si hay flanco ascendente, envio mensaje de aviso
-		if(buttonRisingEdgeOccurred()) {
+		if(buttonReleased()) {
 			uartSendString((uint8_t *)buttonRisingEdgeOcurredMsg);
 		}
 		// No se pedia por ejercicio, pero muestro por el LED2 el estado del pulsador para mayor feedback del ejercicio.
-		if(buttonPressed()) {
+		if(buttonDown()) {
 			BSP_LED_On(LED2);
 		}
 		else {
